@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-
+const verifyToken = require("../middleware/verify-token");
 
 const SALT_LENGTH = 12;
 
@@ -39,5 +39,31 @@ router.post('/signin', async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
+
+router.put("/:userId", verifyToken, async (req, res) => {
+    try {
+      if (req.user._id !== req.params.userId) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+      const user = await User.findByIdAndUpdate(req.params.userId, req.body, {
+        new: true,
+      });
+      res.status(200).json({ user });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  });
+  
+  router.delete("/:userId", verifyToken, async (req, res) => {
+    try {
+      if (req.user._id !== req.params.userId) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+      const deletedUser = await User.findByIdAndDelete(req.params.userId);
+      res.status(204).json(deletedUser);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  });
 
 module.exports = router;
