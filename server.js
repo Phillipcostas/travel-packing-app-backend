@@ -4,9 +4,9 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
-const usersRouter = require("./Controllers/users");
-// const eventsRouter = require("./Controllers/events");
-const profileRouter = require("./Controllers/profiles");
+const usersRouter = require("./controllers/users");
+const suitcaseRouter = require("./controllers/suitcase");
+const profileRouter = require("./controllers/profiles");
 
 app.use(cors());
 
@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/users", usersRouter);
-// app.use("/events", eventsRouter);
+app.use("/suitcase", suitcaseRouter);
 app.use("/profile", profileRouter);
 
 app.listen(3000, () => {

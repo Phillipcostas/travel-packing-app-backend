@@ -7,7 +7,9 @@ const SALT_LENGTH = 12;
 
 const User = require("../models/user");
 const Suitcase = require("../models/suitcase");
-const Suitcase = [
+
+
+const suitcase = [
     {
       name: 'toiletries',
       items: [
@@ -73,7 +75,7 @@ mongoose.connection.on("connected", async () => {
   await User.collection.drop();
 
   await User.create(
-    events.map((event) => {
+    suitcase.map((event) => {
       let x = {
         username: event.username,
         description: event.description,
