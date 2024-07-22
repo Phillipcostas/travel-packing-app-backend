@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const suitcase = new mongoose.Schema({
+const suitcaseSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -18,4 +18,4 @@ const suitcase = new mongoose.Schema({
   },
 });
 
-module.exports = suitcase;
+module.exports = mongoose.model('Suitcase', suitcaseSchema) ;
